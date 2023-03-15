@@ -7,6 +7,7 @@ module.exports = {
         grayPrimary: '#333333',
         graySecondary: '#828282',
         grayTertiary: '#BDBDBD',
+        focus: '#2F80ED',
       },
     },
   },
