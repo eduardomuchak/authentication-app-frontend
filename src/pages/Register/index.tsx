@@ -7,15 +7,19 @@ import { Input } from '../../components/Input';
 import { AiFillLock } from 'react-icons/ai';
 import { MdEmail } from 'react-icons/md';
 
-export function Login() {
+export function Register() {
   return (
     <div className="flex flex-col items-center justify-center h-screen w-screen p-6">
       <div className="w-full max-w-[480px] px-14 py-12 rounded-3xl border border-slate-300 flex flex-col ">
         <img src={Logo} alt="DevChallenges Logo" className="w-32" />
         <div className="flex flex-col py-7 gap-4">
           <h1 className="font-semibold text-lg text-grayPrimary leading-6">
-            Login
+            Join thousands of learners from around the world
           </h1>
+          <h2 className="font-normal text-base text-grayPrimary leading-5">
+            Master web development by making real-life projects. There are
+            multiple paths for you to choose
+          </h2>
         </div>
         <div className="flex flex-col gap-4">
           <Input
@@ -32,7 +36,7 @@ export function Login() {
           />
         </div>
         <button className="bg-bluePrimary text-white font-semibold text-base rounded-lg py-3 mt-6 transition-colors ease-out hover:bg-bluePrimaryDark cursor-pointer">
-          Login
+          Start coding now
         </button>
         <div className="w-full flex flex-col mt-8 gap-6">
           <span className="text-sm font-normal text-graySecondary text-center">
@@ -45,9 +49,9 @@ export function Login() {
             <img src={GithubIcon} alt="Github Icon" />
           </div>
           <span className="text-sm font-normal text-graySecondary text-center">
-            Don’t have an account yet?
+            Already a member?{' '}
             <span className="text-bluePrimaryLight cursor-pointer hover:text-bluePrimary">
-              Register
+              Login
             </span>
           </span>
         </div>
