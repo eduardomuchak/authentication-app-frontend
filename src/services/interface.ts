@@ -9,6 +9,6 @@ export interface LoginResponse {
 }
 
 export interface PostLogin {
-  email: string;
+  username: string;
   password: string;
 }

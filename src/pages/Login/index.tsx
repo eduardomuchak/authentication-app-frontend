@@ -10,6 +10,8 @@ import { MdEmail } from 'react-icons/md';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { postLogin } from '../../services/login';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import { emailRegex } from '../../utils/regex';
 
 export function Login() {
   const queryClient = useQueryClient();
@@ -43,10 +45,15 @@ export function Login() {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault();
-    mutation.mutate({ email, password });
+    const payload = {
+      username: email,
+      password,
+    };
+
+    mutation.mutate(payload);
   };
 
-  const isButtonDisabled = email === '' || password === '';
+  const isButtonDisabled = !emailRegex(email) || password === '';
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-screen p-6">
@@ -97,9 +104,12 @@ export function Login() {
           </div>
           <span className="text-sm font-normal text-graySecondary text-center">
             Don’t have an account yet?{' '}
-            <span className="text-bluePrimaryLight cursor-pointer hover:text-bluePrimary">
+            <Link
+              className="text-bluePrimaryLight cursor-pointer hover:text-bluePrimary"
+              to="/register"
+            >
               Register
-            </span>
+            </Link>
           </span>
         </div>
       </div>

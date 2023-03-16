@@ -7,7 +7,7 @@ export const RequireAuth = () => {
   const token = sessionStorage.getItem('@User');
 
   if (!token) {
-    toast.error('Seu código de acesso expirou, faça login novamente');
+    toast.error('Your session has expired. Please login again.');
   }
 
   return token ? (
