@@ -1,10 +1,11 @@
-import { Login } from '../pages/Login';
+import { Login } from "../pages/Login";
 
-import { Routes, Route, useLocation, Outlet } from 'react-router-dom';
+import { Routes, Route, useLocation, Outlet } from "react-router-dom";
 
-import { Register } from '../pages/Register';
-import { ErrorPage } from './error';
-import { RequireAuth } from './RequireAuth';
+import { Register } from "../pages/Register";
+import { ErrorPage } from "./error";
+import { RequireAuth } from "./RequireAuth";
+import { PersonalInfo } from "../pages/PersonalInfo";
 
 export function MainRoutes() {
   const location = useLocation();
@@ -18,6 +19,7 @@ export function MainRoutes() {
 
         {/* protected routes */}
         <Route element={<RequireAuth />}>
+          <Route path="/user" element={<PersonalInfo />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Route>

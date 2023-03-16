@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Input } from "../../components/Input";
 import { AiFillLock } from "react-icons/ai";
 import { MdEmail } from "react-icons/md";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { postLogin } from "../../services/login";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { emailRegex } from "../../utils/regex";
 
 import Logo from "../../assets/devchallenges.svg";
@@ -15,7 +15,7 @@ import GoogleIcon from "../../assets/Google.svg";
 import TwitterIcon from "../../assets/Twitter.svg";
 
 export function Login() {
-  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: postLogin,
@@ -50,8 +50,15 @@ export function Login() {
 
     mutation.mutate(payload, {
       onSuccess: (data) => {
-        sessionStorage.setItem("@Token", data.access_token);
+        sessionStorage.setItem(
+          "@Token",
+          JSON.stringify({
+            id: data.id,
+            token: data.access_token,
+          })
+        );
         toast.success("Login successful");
+        navigate("/user");
       },
     });
   };
