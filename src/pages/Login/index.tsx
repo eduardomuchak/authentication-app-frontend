@@ -1,49 +1,46 @@
-import { useEffect, useState } from 'react';
-import { Input } from '../../components/Input';
-import { AiFillLock } from 'react-icons/ai';
-import { MdEmail } from 'react-icons/md';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { postLogin } from '../../services/login';
-import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
-import { emailRegex } from '../../utils/regex';
+import { useState } from "react";
+import { Input } from "../../components/Input";
+import { AiFillLock } from "react-icons/ai";
+import { MdEmail } from "react-icons/md";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { postLogin } from "../../services/login";
+import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import { emailRegex } from "../../utils/regex";
 
-import Logo from '../../assets/devchallenges.svg';
-import FacebookIcon from '../../assets/Facebook.svg';
-import GithubIcon from '../../assets/Github.svg';
-import GoogleIcon from '../../assets/Google.svg';
-import TwitterIcon from '../../assets/Twitter.svg';
+import Logo from "../../assets/devchallenges.svg";
+import FacebookIcon from "../../assets/Facebook.svg";
+import GithubIcon from "../../assets/Github.svg";
+import GoogleIcon from "../../assets/Google.svg";
+import TwitterIcon from "../../assets/Twitter.svg";
 
 export function Login() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: postLogin,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['login'] });
-    },
     onError: () => {
-      toast.error('Ops! Something went wrong');
+      toast.error("Ops! Something went wrong");
     },
   });
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const isButtonDisabled = !emailRegex(email) || password === '';
+  const isButtonDisabled = !emailRegex(email) || password === "";
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    if (event.target.id === 'email') {
+    if (event.target.id === "email") {
       setEmail(value);
     }
-    if (event.target.id === 'password') {
+    if (event.target.id === "password") {
       setPassword(value);
     }
   };
 
   const handleSubmit = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
     const payload = {
@@ -51,15 +48,13 @@ export function Login() {
       password,
     };
 
-    mutation.mutate(payload);
+    mutation.mutate(payload, {
+      onSuccess: (data) => {
+        sessionStorage.setItem("@Token", data.access_token);
+        toast.success("Login successful");
+      },
+    });
   };
-
-  useEffect(() => {
-    if (mutation.data) {
-      toast.success('Login successful');
-      sessionStorage.setItem('@Token', mutation.data.access_token);
-    }
-  }, [mutation]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-screen p-6">
@@ -75,7 +70,7 @@ export function Login() {
             label="Email"
             id="email"
             value={email}
-            icon={<MdEmail size={20} color={'#828282'} />}
+            icon={<MdEmail size={20} color={"#828282"} />}
             onChange={handleChange}
             type="email"
             maxLength={50}
@@ -84,7 +79,7 @@ export function Login() {
             label="Password"
             id="password"
             value={password}
-            icon={<AiFillLock size={20} color={'#828282'} />}
+            icon={<AiFillLock size={20} color={"#828282"} />}
             onChange={handleChange}
             type="password"
             maxLength={50}
@@ -109,7 +104,7 @@ export function Login() {
             <img src={GithubIcon} alt="Github Icon" />
           </div>
           <span className="text-sm font-normal text-graySecondary text-center">
-            Don’t have an account yet?{' '}
+            Don’t have an account yet?{" "}
             <Link
               className="text-bluePrimaryLight cursor-pointer hover:text-bluePrimary"
               to="/register"
@@ -121,7 +116,7 @@ export function Login() {
       </div>
       <div className="w-full max-w-[480px] flex flex-row justify-between mt-3">
         <span className="text-sm font-normal text-graySecondary">
-          created by{' '}
+          created by{" "}
           <span className="font-bold underline">
             Eduardo Muchak & Gabriel Peralta
           </span>
