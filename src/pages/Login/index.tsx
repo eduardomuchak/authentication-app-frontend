@@ -1,22 +1,21 @@
-import { useState } from 'react';
-import Logo from '../../assets/devchallenges.svg';
-import FacebookIcon from '../../assets/Facebook.svg';
-import GithubIcon from '../../assets/Github.svg';
-import GoogleIcon from '../../assets/Google.svg';
-import TwitterIcon from '../../assets/Twitter.svg';
+import { useEffect, useState } from 'react';
 import { Input } from '../../components/Input';
 import { AiFillLock } from 'react-icons/ai';
 import { MdEmail } from 'react-icons/md';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postLogin } from '../../services/login';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { emailRegex } from '../../utils/regex';
 
+import Logo from '../../assets/devchallenges.svg';
+import FacebookIcon from '../../assets/Facebook.svg';
+import GithubIcon from '../../assets/Github.svg';
+import GoogleIcon from '../../assets/Google.svg';
+import TwitterIcon from '../../assets/Twitter.svg';
+
 export function Login() {
   const queryClient = useQueryClient();
-
-  // const query = useQuery({ queryKey: ['login'], queryFn: postLogin });
 
   const mutation = useMutation({
     mutationFn: postLogin,
@@ -30,6 +29,8 @@ export function Login() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const isButtonDisabled = !emailRegex(email) || password === '';
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -53,7 +54,12 @@ export function Login() {
     mutation.mutate(payload);
   };
 
-  const isButtonDisabled = !emailRegex(email) || password === '';
+  useEffect(() => {
+    if (mutation.data) {
+      toast.success('Login successful');
+      sessionStorage.setItem('@Token', mutation.data.access_token);
+    }
+  }, [mutation]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-screen p-6">

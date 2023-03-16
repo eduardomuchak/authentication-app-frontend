@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 export const RequireAuth = () => {
   const location = useLocation();
 
-  const token = sessionStorage.getItem('@User');
+  const token = sessionStorage.getItem('@Token');
 
   if (!token) {
     toast.error('Your session has expired. Please login again.');
