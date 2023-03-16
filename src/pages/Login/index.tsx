@@ -22,8 +22,6 @@ export function Login() {
     },
   });
 
-  // console.log('query', query);
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -41,7 +39,7 @@ export function Login() {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault();
-    mutation.mutate({ username: email, password });
+    mutation.mutate({ email, password });
   };
 
   const isButtonDisabled = email === '' || password === '';
