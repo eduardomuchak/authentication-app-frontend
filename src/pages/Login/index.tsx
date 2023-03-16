@@ -7,8 +7,23 @@ import TwitterIcon from '../../assets/Twitter.svg';
 import { Input } from '../../components/Input';
 import { AiFillLock } from 'react-icons/ai';
 import { MdEmail } from 'react-icons/md';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { postLogin } from '../../services/login';
 
 export function Login() {
+  const queryClient = useQueryClient();
+
+  // const query = useQuery({ queryKey: ['login'], queryFn: postLogin });
+
+  const mutation = useMutation({
+    mutationFn: postLogin,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['login'] });
+    },
+  });
+
+  // console.log('query', query);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -26,7 +41,7 @@ export function Login() {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault();
-    console.log('Login');
+    mutation.mutate({ username: email, password });
   };
 
   const isButtonDisabled = email === '' || password === '';
