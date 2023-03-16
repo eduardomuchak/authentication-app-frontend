@@ -9,6 +9,7 @@ import { AiFillLock } from 'react-icons/ai';
 import { MdEmail } from 'react-icons/md';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { postLogin } from '../../services/login';
+import { toast } from 'react-toastify';
 
 export function Login() {
   const queryClient = useQueryClient();
@@ -19,6 +20,9 @@ export function Login() {
     mutationFn: postLogin,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['login'] });
+    },
+    onError: () => {
+      toast.error('Ops! Something went wrong');
     },
   });
 

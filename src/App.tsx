@@ -1,5 +1,27 @@
+import { BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import { MainRoutes } from './routes';
+
 function App() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  return (
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        // pauseOnFocusLoss
+        draggable
+        // pauseOnHover
+        theme="light"
+      />
+      <BrowserRouter>
+        <MainRoutes />
+      </BrowserRouter>
+    </>
+  );
 }
 
 export default App;
