@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Logo from '../../assets/devchallenges.svg';
 import FacebookIcon from '../../assets/Facebook.svg';
 import GithubIcon from '../../assets/Github.svg';
@@ -8,30 +9,63 @@ import { AiFillLock } from 'react-icons/ai';
 import { MdEmail } from 'react-icons/md';
 
 export function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    if (event.target.id === 'email') {
+      setEmail(value);
+    }
+    if (event.target.id === 'password') {
+      setPassword(value);
+    }
+  };
+
+  const handleSubmit = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    event.preventDefault();
+    console.log('Login');
+  };
+
+  const isButtonDisabled = email === '' || password === '';
+
   return (
     <div className="flex flex-col items-center justify-center h-screen w-screen p-6">
-      <div className="w-full max-w-[480px] px-14 py-12 rounded-3xl border border-slate-300 flex flex-col ">
+      <div className="w-full max-w-[480px] px-8 lg:px-14 py-12 rounded-3xl border border-slate-300 flex flex-col ">
         <img src={Logo} alt="DevChallenges Logo" className="w-32" />
         <div className="flex flex-col py-7 gap-4">
           <h1 className="font-semibold text-lg text-grayPrimary leading-6">
             Login
           </h1>
         </div>
-        <div className="flex flex-col gap-4">
+        <form className="flex flex-col gap-4">
           <Input
             label="Email"
             id="email"
-            value=""
+            value={email}
             icon={<MdEmail size={20} color={'#828282'} />}
+            onChange={handleChange}
+            type="email"
+            maxLength={50}
           />
           <Input
             label="Password"
             id="password"
-            value=""
+            value={password}
             icon={<AiFillLock size={20} color={'#828282'} />}
+            onChange={handleChange}
+            type="password"
+            maxLength={50}
           />
-        </div>
-        <button className="bg-bluePrimary text-white font-semibold text-base rounded-lg py-3 mt-6 transition-colors ease-out hover:bg-bluePrimaryDark cursor-pointer">
+        </form>
+        <button
+          className="bg-bluePrimary text-white font-semibold text-base rounded-lg py-3 mt-6 transition-colors ease-out hover:bg-bluePrimaryDark cursor-pointer disabled:bg-bluePrimaryDark disabled:cursor-not-allowed"
+          type="submit"
+          onClick={(event) => handleSubmit(event)}
+          disabled={isButtonDisabled}
+        >
           Login
         </button>
         <div className="w-full flex flex-col mt-8 gap-6">
@@ -45,7 +79,7 @@ export function Login() {
             <img src={GithubIcon} alt="Github Icon" />
           </div>
           <span className="text-sm font-normal text-graySecondary text-center">
-            Don’t have an account yet?
+            Don’t have an account yet?{' '}
             <span className="text-bluePrimaryLight cursor-pointer hover:text-bluePrimary">
               Register
             </span>

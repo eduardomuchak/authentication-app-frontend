@@ -30,7 +30,7 @@ export function Input({ label, id, value, icon, ...rest }: Props) {
         {label}
       </label>
       <input
-        className="relative w-full z-20 text-grayTertiary appearance-none bg-transparent h-12 px-10 py-4 rounded-lg border border-grayTertiary focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent transition-all duration-200"
+        className="relative w-full z-20 text-grayPrimary appearance-none bg-transparent h-12 px-10 py-4 rounded-lg border border-grayTertiary focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent transition-all duration-200"
         id={id}
         value={value}
         onFocus={() => setIsActive(true)}

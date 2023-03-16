@@ -10,7 +10,7 @@ import { MdEmail } from 'react-icons/md';
 export function Register() {
   return (
     <div className="flex flex-col items-center justify-center h-screen w-screen p-6">
-      <div className="w-full max-w-[480px] px-14 py-12 rounded-3xl border border-slate-300 flex flex-col ">
+      <div className="w-full max-w-[480px] px-8 lg:px-14 py-12 rounded-3xl border border-slate-300 flex flex-col ">
         <img src={Logo} alt="DevChallenges Logo" className="w-32" />
         <div className="flex flex-col py-7 gap-4">
           <h1 className="font-semibold text-lg text-grayPrimary leading-6">
