@@ -1,14 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
+import { Header } from "../../components/Header";
 import { fetchPersonalInfo } from "../../services/personalInfo";
+import { fetchIdFromToken } from "../../utils/fetchToken";
 
 export function PersonalInfo() {
-  let id: number | undefined;
-  const token = sessionStorage.getItem("@Token");
-
-  if (token) {
-    const parsedToken = JSON.parse(token);
-    id = parsedToken.id;
-  }
+  const id = fetchIdFromToken();
 
   const { isLoading, isError, data } = useQuery({
     queryKey: ["personalInfo"],
@@ -23,5 +19,10 @@ export function PersonalInfo() {
     return <span>Something happened</span>;
   }
 
-  return <div>{data.username}</div>;
+  return (
+    <div className="w-screen h-screen bg-bgGray">
+      <Header />
+      <div>{data.username}</div>
+    </div>
+  );
 }
